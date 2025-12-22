@@ -17,9 +17,7 @@ function App() {
     let value = event.target.value;
     setInput(value);
   };
-  console.log(input);
 
-  // todolist.map((item))
   return (
     <>
       <h1>{input}</h1>
