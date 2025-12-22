@@ -43,4 +43,7 @@ function App() {
 //   bye;
 // }
 
+// 3.push,pull,1.add,2.commit(git hub )
+//boot.dev
+
 export default App;
