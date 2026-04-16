@@ -1,82 +1,25 @@
-import { useState } from "react";
-import "./App.css";
-
+import List from "./List";
 function App() {
-  const [quotes, setQuotes] = useState([]);
-  const [charName, setCharName] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-
-  const fetchQuote = async () => {
-    if (!charName) return;
-
-    setLoading(true);
-    setError("");
-    setQuotes([]);
-    try {
-      const response = await fetch(
-        `https://yurippe.vercel.app/api/quotes?character=${charName}&random=1`
-      );
-      const result = await response.json();
-
-      if (response.status === 404) {
-        throw new Error("Character not found");
-      }
-      setQuotes(result);
-    } catch (e) {
-      setError(e.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault(); // stop page refresh
-    fetchQuote();
-  };
-
-  const handleKeyUp = (e) => {
-    if (e.key === "Enter") {
-      fetchQuote();
-    }
-  };
-
-  const handleInput = (e) => {
-    const value = e.target.value;
-    setCharName(value);
-  };
-
+  const fruits = [
+    { id: 1, name: "Apple", calories: 95 },
+    { id: 2, name: "Orange", calories: 45 },
+    { id: 3, name: "Banana", calories: 105 },
+    { id: 4, name: "Pineapple", calories: 37 },
+    { id: 5, name: "Coconut", calories: 159 },
+  ];
+  const vegetables = [
+    { id: 6, name: "Potato", calories: 110 },
+    { id: 7, name: "Celery", calories: 15 },
+    { id: 8, name: "Carrots", calories: 25 },
+    { id: 9, name: "Corn", calories: 63 },
+    { id: 10, name: "Broccoli", calories: 50 },
+  ];
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={charName}
-          onChange={handleInput}
-          placeholder="Enter character name"
-        />
-
-        <button type="submit">Search</button>
-      </form>
-
-      {loading && <p>Loading...</p>}
-      {error && <p>{error}</p>}
-
-      <ul>
-        {quotes.map((item, index) => (
-          <li key={index}>
-            <p>
-              <b>Show:</b> {item.show}
-            </p>
-            <p>
-              <b>Quote:</b> {item.quote}
-            </p>
-            <p>
-              <b>Character:</b> {item.character}
-            </p>
-          </li>
-        ))}
-      </ul>
+      {fruits.length > 0 && <List items={fruits} category="fruits" />}
+      {vegetables.length > 0 && (
+        <List items={vegetables} category="vegetables" />
+      )}
     </>
   );
 }
